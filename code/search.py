@@ -9,6 +9,7 @@ tokenizer = RegexpTokenizer(r'[a-zA-Z]+')
 import os
 from csv import DictReader
 from collections import defaultdict
+nltk.download('stopwords')
 from nltk.corpus import stopwords
 
 class Query():
@@ -42,6 +43,7 @@ class Query():
             return -1
         return log10(len(self.tfs) / self.df[token])  # len(tfs) returns no. of docs; df[token] returns the token's document frequency
 
+    
     def cal_weight(self, text, token):                                      #returns the weight of a token in a document without normalizing
         self.idf = self.get_idf(token)
         return (1+log10(self.tfs[text][token]))*self.idf                       #tfs has the logs of term frequencies of all docs in a multi-level dict
@@ -122,7 +124,7 @@ https://towardsdatascience.com/finding-word-similarity-using-tf-idf-in-a-term-co
 if __name__ == '__main__':
     query1 = Query()
     query1.read_csv()
-    query1.cal_tf_idf()
+    query1.t()
     query1.norm_weight()
 
     print("Subject ID || Score")
